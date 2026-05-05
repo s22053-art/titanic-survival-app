@@ -47,5 +47,5 @@ def set_background(image_path):
 
 def prepare_input(pclass, sex_val, age, sibsp, parch, fare, embarked, feature_columns):
     sex_str = "male" if sex_val == 1 else "female"
-    raw = pd.DataFrame([{
+    raw = pd.DataFrame([
         "Pclass": pclass, "Age": fl
