@@ -1,13 +1,20 @@
-import streamlit as st
+iimport streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
 import base64
+import os
 
 # ── Wczytanie modelu ──────────────────────────────────────────────────────────
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'titanic_model.pkl')
+
 try:
-    payload = pickle.load(open('titanic_model.pkl', 'rb'))
+    payload         = pickle.load(open(MODEL_PATH, 'rb'))
     model           = payload["model"]
+    feature_columns = payload["feature_columns"]
+    model_loaded    = True
+except Exception:
+    model_loaded = False
     feature_columns = payload["feature_columns"]
     model_loaded    = True
 except FileNotFoundError:
