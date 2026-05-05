@@ -5,7 +5,7 @@ import pandas as pd
 import base64
 import os
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'titanic_model.pkl')
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'titanic_model.pkl')
 
 try:
     with open(MODEL_PATH, 'rb') as f:
@@ -16,6 +16,7 @@ try:
 except Exception as e:
     model_loaded    = False
     feature_columns = []
+    load_error      = str(e)
 
 sex_d      = {0: 'Kobieta', 1: 'Mężczyzna'}
 pclass_d   = {1: 'Pierwsza', 2: 'Druga', 3: 'Trzecia'}
@@ -66,7 +67,7 @@ def main():
         layout="centered",
     )
 
-    img_path = os.path.join(os.path.dirname(__file__), 'tlo_suml.JPG')
+    img_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tlo_suml.JPG')
     set_background(img_path)
 
     overview    = st.container()
@@ -77,7 +78,7 @@ def main():
         st.title('🚢 Czy przeżyłbyś katastrofę "Titanica"?')
         st.markdown("Wypełnij dane pasażera i sprawdź, czy model regresji logistycznej przewidziałby Twoje przeżycie.")
         if not model_loaded:
-            st.error("⚠️ Brak pliku titanic_model.pkl.")
+            st.error(f"⚠️ Błąd wczytania modelu: {load_error}")
 
     with left:
         age    = st.slider("🎂 Wiek", 1, 100, 30)
